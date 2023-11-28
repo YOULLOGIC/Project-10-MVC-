@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Core\Controller;
+
+class Users extends Controller {
+    public object $model;
+
+    public function __construct()
+    {
+        parent::cekLogin();
+        $this->model = new \App\Models\User();
+    }
+
+    public function index()
+    {
+        $data["rows"] = $this->model->show();
+        $this->dashboard('users/index', $data);
+    }
+
+    public function save()
+    {
+        $this->model->save();
+        header("Location:" . URL . "/users");
+    }
+
+    public function edit($id)
+    {
+        $data["row"] = $this->model->edit($id);
+        $this->dashboard('users/edit', $data);
+    }
+
+    public function update()
+    {
+        $this->model->update();
+        header("Location:" . URL . "/users");
+    }
+
+    public function delete($id)
+    {
+        $this->model->delete($id);
+        header("Location:" . URL . "/users");
+    }
+
+}
+
+?>
